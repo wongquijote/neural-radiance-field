@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <meta name="author" content="Kyle Wong" />
+  <title>ee100cc64d754b0a88aaafe3b459ee13</title>
+  <style>
+    html {
+      line-height: 1.5;
+      font-family: Georgia, serif;
+      font-size: 20px;
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 1em;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, 'Lucida Console', Consolas, monospace;
+      font-size: 85%;
+      margin: 0;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">CS180 Project 5</h1>
+<p class="author">Kyle Wong</p>
+<p class="date">November 2023</p>
+</header>
+<h1 id="Part 1: Fit a Neural Field to a 2D Image">Part 1: Fit a Neural Field to a 2D Image</h1>
+<p>
+With Neural Radiance Fields (NeRF) we can recreate 2D photos using machine learning. For part 1 of the project I used a neural network with following architecture
+</p>
+<figure>
+<img src="2dnerf.png" id="fig:awesome_image2"
+alt="2dnerf" />
+<figcaption aria-hidden="true">2D nerf</figcaption>
+</figure>
+<p>
+    Here is the original fox photo we will try to recreate
+</p>
+<figure>
+    <img src="fox.jpeg" id="fig:awesome_image2"
+    alt="fox" />
+    <figcaption aria-hidden="true">Original Fox</figcaption>
+</figure>
+<p>
+    This was able to achieve a PSNR of roughly 27 on the image of a fox with the learning rate = 1e-2 and L = 10 for the positional encoding.
+</p>
+<figure>
+    <img src="foxorig.png" id="fig:awesome_image2"
+    alt="foxorig" />
+    <figcaption aria-hidden="true">Fox with 256 channels and lr=1e-2</figcaption>
+</figure>
+<p>
+    This was able to achieve a PSNR of roughly 28 on the image of a fox with the learning rate = 1e-3 and L = 10 and channels = 512 for the positional encoding.
+</p>
+<figure>
+    <img src="foxchannels.png" id="fig:awesome_image2"
+    alt="foxchannels" />
+    <figcaption aria-hidden="true">Fox with 512 channels and lr=1e-3</figcaption>
+</figure>
+<p>
+    This was able to achieve a PSNR of roughly 28 (slightly higher than with L = 10) on the image of a fox with the learning rate = 1e-3 and L = 15 and channels = 512 for the positional encoding.
+</p>
+<figure>
+    <img src="foxlayers.png" id="fig:awesome_image2"
+    alt="foxlayers" />
+    <figcaption aria-hidden="true">Fox with 512 channels, lr=1e-3, and layers=15</figcaption>
+</figure>
+<p>
+    PSNR was defined to be this:
+</p>
+<figure>
+    <img src="psnr.png" id="fig:awesome_image2"
+    alt="psnr" />
+    <figcaption aria-hidden="true">psnr</figcaption>
+</figure>
+<p>
+    Below is my training PSNR across all the iterations for the 3 different hyperparameter settings
+</p>
+<figure>
+    <img src="psnr.png" id="fig:awesome_image2"
+    alt="psnr" />
+    <figcaption aria-hidden="true">PSNR of fox</figcaption>
+</figure>
+
+<p>
+    Here is my own photo of my friend that I will try to recreate
+</p>
+<figure>
+    <img src="aaron.jpg" id="fig:awesome_image2"
+    alt="man" />
+    <figcaption aria-hidden="true">Original Man</figcaption>
+</figure>
+<p>
+    Here are the photos at different iterations in the training loop
+</p>
+<figure>
+    <img src="man.png" id="fig:awesome_image2"
+    alt="man" />
+    <figcaption aria-hidden="true">Man with 256 channels and lr=1e-2</figcaption>
+</figure>
+
+<p>
+    Below is my training PSNR across all the iterations for the 3 different hyperparameter settings
+</p>
+<figure>
+    <img src="psnrman.png" id="fig:awesome_image2"
+    alt="psnr" />
+    <figcaption aria-hidden="true">PSNR of man</figcaption>
+</figure>
+
+<h1 id="Part 2: Fit a Neural Radiance Field from Multi-view Images">Part 2: Fit a Neural Radiance Field from Multi-view Images</h1>
+<h2 id="Part 2.1: Create Rays from Cameras">Part 2.1: Create Rays from Cameras</h2>
+<p>
+    In this step we are trying to create rays from cameras. 
+    The first step is to define the camera-to-world transformation matrices for each view in the scene. 
+    We implement a function x_w = transform(c2w, x_c) that transforms a point from camera to the world space.
+    Given world_to_camera matrices you can go from world coordinate to camera coordinates.
+    In my function I inverted the world-to-camera transformation and applied the inverse to the camera coordinates to get their corresponding world coordinates.
+
+    Next, we implement a function that transforms a point from the pixel coordinate system back to the camera coordinate system: x_c = pixel_to_camera(K, uv, s).
+    These matrices are then used to convert points from the camera coordinate system to the 3D world coordinate system. 
+    Given K you can go from camera coordinates to pixel coordinates that are scaled by s. 
+    I simply apply the function here. 
+
+    Lastly, we implement a function that convert a pixel coordinate to a ray with origin and noramlized direction: ray_o, ray_d = pixel_to_ray(K, c2w, uv).
+    This function is necessary so we can sample points along theses rays and then do the volumetric rendering.
+</p>
+<h2 id="Part 2.2: Sampling">Part 2.2: Sampling</h2>
+<p>
+    In this step we are trying to sample rays from our collection of images.
+    I flattened all the pixels from all the images and do a random global sample of N pixels.
+    I pass these into pixel_to_ray to get their corresponding rays. 
+    We also need to sample points along these rays which I do by creating an interval of 64 numbers, from 2 to 6, where for each t in that interval we have x = R_0 + R_d * t.
+    We also jitter the values to prevent fixed coordinates and overfitting.
+</p>
+<h2 id="Part 2.3: Putting the Dataloading All Together">Part 2.3: Putting the Dataloading All Together</h2>
+<p>
+    I made a class RaysData that has a sample_rays function.
+    Below is the visualualization of these rays with their corresponding cameras with 100 rays.
+</p>
+<figure>
+    <img src="rays.png" id="fig:awesome_image2" alt="rays" />
+    <figcaption aria-hidden="true">Cameras with their rays</figcaption>
+</figure>
+<h2 id="Part 2.4: Neural Radiance Field">Part 2.4: Neural Radiance Field</h2>
+<p>
+    I implemented the neural network architecture for NERF in 3D with the original architecture shown below.
+</p>
+<figure>
+    <img src="nerf3d.png" id="fig:awesome_image2" alt="nerf3d" />
+    <figcaption aria-hidden="true">NeRF 3D architecture</figcaption>
+</figure>
+<h2 id="Part 2.5: Volume Rendering">Part 2.5: Volume Rendering</h2>
+<p>
+    I simply followed the formula that they gave and using torch.cumsum() to calculate T_i. Below are the renders of a one validation image at different iterations. 
+    To make training happen faster (around 10 minutes) I decided to use batch sizes of 4096 and I was able to achieve PSNR of around 23 with 1000 iterations.
+    Finally there is the spherical rendering gif from the model after training for 1000 iterations.
+</p>
+<figure>
+    <img src="volrend.png" id="fig:awesome_image2" alt="volrend" />
+    <figcaption aria-hidden="true">Volumentric Rendering Formula</figcaption>
+</figure>
+<figure>
+    <img src="lego1.png" id="fig:awesome_image2"
+    alt="lego1" />
+</figure>
+<figure>
+    <img src="lego2.png" id="fig:awesome_image2"
+    alt="lego2" />
+</figure>
+<figure>
+    <img src="psnrlego.png" id="fig:awesome_image2"
+    alt="psnrlego" />
+</figure>
+<figure>
+    <img src="animation.gif" id="fig:awesome_image2"
+    alt="animation" />
+</figure>
+
+</body>
+</html>
